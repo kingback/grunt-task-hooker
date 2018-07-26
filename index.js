@@ -50,8 +50,8 @@ const hookFunction = function(grunt) {
 
       if (
         !task || 
-        !(type === 'array' && task.length) || 
-        VALID_TASK_TYPE.indexOf(type) < 0
+        !(taskType === 'array' && task.length) || 
+        VALID_TASK_TYPE.indexOf(taskType) < 0
       ) return;
 
       const where = post && post !== 'pre' ? 'post' : 'pre';
