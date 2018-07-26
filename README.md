@@ -31,7 +31,10 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [...]);
 
   // pre hook without description
-  grunt.hookTask('build', ['clean:dist']);
+  grunt.hookTask('build', 'clean:dist');
+
+  // pre hook multi task
+  grunt.hookTask(['build', 'dev'], 'clean:dist');
 
   // post hook with description
   grunt.hookTask('clean:src', 'post clean src', function() {
@@ -41,13 +44,16 @@ module.exports = function (grunt) {
     }, false);
   }, true);
 
-  // hook multi task
+  // hook multi-type task
   grunt.hookTask('clean', 'pre clean all', function() {
     console.log('do something before all clean tasks');
   });
 
   // unhook all hooks
   grunt.unhookTask('clean');
+
+  // unhook multi hooks
+  grunt.unhookTask(['clean', 'build']);
 
   // unhook all pre hooks
   grunt.unhookTask('build', 'pre');

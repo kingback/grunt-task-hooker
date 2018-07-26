@@ -11,11 +11,6 @@ const hookFunction = function(grunt) {
 
   const hooker = {
 
-    _check(task) {
-      const type = grunt.util.kindOf(task);
-      return task && VALID_TASK_TYPE.indexOf(type) && (type !== 'array' || task.length);
-    },
-
     _run(tasks) {
       if (!tasks || !tasks.length) return;
       return runTask.apply(grunt.task, arguments);
@@ -40,24 +35,44 @@ const hookFunction = function(grunt) {
     },
 
     hook(taskName, description, task, post) {
-      if (description && typeof description !== 'string') { 
+      const descType = grunt.util.kindOf(description);
+      const taskType = grunt.util.kindOf(task)
+      const taskNameType = grunt.util.kindOf(taskName);
+
+      if (
+        (descType !== 'string' && description) || // hook('clean', []) hook('clean', function() {}, true)
+        (descType === 'string' && description && (!task || taskType === 'boolean'))  // hook('build', 'clean') hook('build', 'clean', true)
+      ) { 
         post = task;
-        tasks = description; 
+        task = description; 
         description = null;
       }
 
-      if (!this._check(task)) return false;
+      if (
+        !task || 
+        !(type === 'array' && task.length) || 
+        VALID_TASK_TYPE.indexOf(type) < 0
+      ) return;
 
       const where = post && post !== 'pre' ? 'post' : 'pre';
-      this._hook(where, taskName, description, task);
+
+      if (taskNameType === 'array') {
+        taskName.forEach((tsn) => this._hook(where, tsn, description, task));
+      } else {
+        this._hook(where, taskName, description, task);
+      }
     },
 
     unhook(taskName, where) {
-      const hookTask = hookMap[taskName];
-      if (!hookTask) return;
-      if (where === 'pre' || !where) this._unhook(taskName, 'pre');
-      if (where === 'post' || !where) this._unhook(taskName, 'post');
-      if (!hookTask.pre.length && !hookTask.post.length) delete hookMap[taskName];
+      if (grunt.util.kindOf(taskName) === 'array') {
+        taskName.forEach((tsn) => this.unhook(tsn, where));
+      } else {
+        const hookTask = hookMap[taskName];
+        if (!hookTask) return;
+        if (where === 'pre' || !where || where === 'both') this._unhook(taskName, 'pre');
+        if (where === 'post' || !where || where === 'both') this._unhook(taskName, 'post');
+        if (!hookTask.pre.length && !hookTask.post.length) delete hookMap[taskName];
+      }
     }
   };
 

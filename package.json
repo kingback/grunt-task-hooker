@@ -1,6 +1,6 @@
 {
   "name": "grunt-task-hooker",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Add pre-execution and post-execution \"hooks\" to grunt task",
   "main": "index.js",
   "scripts": {
