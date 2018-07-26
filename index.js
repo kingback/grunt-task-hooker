@@ -36,8 +36,8 @@ const hookFunction = function(grunt) {
 
     hook(taskName, description, task, post) {
       const descType = grunt.util.kindOf(description);
-      const taskType = grunt.util.kindOf(task)
       const taskNameType = grunt.util.kindOf(taskName);
+      let taskType = grunt.util.kindOf(task);
 
       if (
         (descType !== 'string' && description) || // hook('clean', []) hook('clean', function() {}, true)
@@ -46,6 +46,7 @@ const hookFunction = function(grunt) {
         post = task;
         task = description; 
         description = null;
+        taskType = grunt.util.kindOf(task);
       }
 
       if (
