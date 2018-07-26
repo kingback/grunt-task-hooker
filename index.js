@@ -39,27 +39,17 @@ const hookFunction = function(grunt) {
       hookTask[where] = [];
     },
 
-    hook(taskName, description, task, options) {
+    hook(taskName, description, task, post) {
       if (description && typeof description !== 'string') { 
-        options = task;
+        post = task;
         tasks = description; 
         description = null;
       }
 
       if (!this._check(task)) return false;
 
-      if (!options) {
-        options = { pre: task };
-      } else if (typeof options === 'boolean') {
-        if (options) {
-          options = { post: task };
-        } else {
-          options = { pre: task };
-        }
-      }
-
-      this._hook('pre', taskName, description, options.pre);
-      this._hook('post', taskName, description, options.post);
+      const where = post && post !== 'pre' ? 'post' : 'pre';
+      this._hook(where, taskName, description, task);
     },
 
     unhook(taskName, where) {
