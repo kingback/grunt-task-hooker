@@ -1,0 +1,31 @@
+{
+  "name": "grunt-task-hooker",
+  "version": "0.1.0",
+  "description": "Add pre-execution and post-execution \"hooks\" to grunt task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kingback/grunt-task-hooker.git"
+  },
+  "keywords": [
+    "grunt",
+    "task",
+    "hooker",
+    "hook"
+  ],
+  "author": {
+    "name": "kingback",
+    "email": "ningzbruc@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kingback/grunt-task-hooker/issues"
+  },
+  "homepage": "https://github.com/kingback/grunt-task-hooker#readme",
+  "dependencies": {
+    "exit": "^0.1.2"
+  }
+}
