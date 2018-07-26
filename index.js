@@ -83,7 +83,11 @@ const hookFunction = function(grunt) {
     }
   }
 
-  return (globalHooker = grunt.hooker = hooker);
+  // add grunt method
+  grunt.hookTask = grunt.task.hookTask = hooker.hook.bind(hooker);
+  grunt.unhookTask = grunt.task.unhookTask = hooker.unhook.bind(hooker);
+  
+  return (globalHooker = hooker);
 };
 
 Object.defineProperty(hookFunction, 'hook', {

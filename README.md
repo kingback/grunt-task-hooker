@@ -31,10 +31,10 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [...]);
 
   // pre hook without description
-  grunt.hooker.hook('build', ['clean:dist']);
+  grunt.hookTask('build', ['clean:dist']);
 
   // post hook with description
-  grunt.hooker.hook('clean:src', 'post clean src', function() {
+  grunt.hookTask('clean:src', 'post clean src', function() {
     const done = this.async();
     setTimeout(function() {
       done();
@@ -42,18 +42,18 @@ module.exports = function (grunt) {
   }, true);
 
   // hook multi task
-  grunt.hooker.hook('clean', 'pre clean all', function() {
+  grunt.hookTask('clean', 'pre clean all', function() {
     console.log('do something before all clean tasks');
   });
 
   // unhook all hooks
-  grunt.hooker.unhook('clean');
+  grunt.unhookTask('clean');
 
   // unhook all pre hooks
-  grunt.hooker.unhook('build', 'pre');
+  grunt.unhookTask('build', 'pre');
 
   // unhook all post hooks
-  grunt.hooker.unhook('build', 'post');
+  grunt.unhookTask('build', 'post');
 };
 ```
 
