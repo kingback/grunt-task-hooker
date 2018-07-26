@@ -19,7 +19,7 @@ npm install grunt-task-hooker --save-dev
 module.exports = function (grunt) {
 
   // Don't forget to pass "grunt" object into the function!!!
-  const hooker = require('grunt-task-hooker')(grunt);
+  require('grunt-task-hooker')(grunt);
 
   grunt.initConfig({
     clean: {
@@ -31,10 +31,10 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [...]);
 
   // pre hook without description
-  hooker.hook('build', ['clean:dist']);
+  grunt.hooker.hook('build', ['clean:dist']);
 
   // post hook with description
-  hooker.hook('clean:src', 'post clean src', function() {
+  grunt.hooker.hook('clean:src', 'post clean src', function() {
     const done = this.async();
     setTimeout(function() {
       done();
@@ -42,18 +42,18 @@ module.exports = function (grunt) {
   }, true);
 
   // hook multi task
-  hooker.hook('clean', 'pre clean all', function() {
+  grunt.hooker.hook('clean', 'pre clean all', function() {
     console.log('do something before all clean tasks');
   });
 
   // unhook all hooks
-  hooker.unhook('clean');
+  grunt.hooker.unhook('clean');
 
   // unhook all pre hooks
-  hooker.unhook('build', 'pre');
+  grunt.hooker.unhook('build', 'pre');
 
   // unhook all post hooks
-  hooker.unhook('build', 'post');
+  grunt.hooker.unhook('build', 'post');
 };
 ```
 

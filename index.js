@@ -11,8 +11,6 @@ const hookFunction = function(grunt) {
 
   const hooker = {
 
-    grunt,
-
     _check(task) {
       const type = grunt.util.kindOf(task);
       return task && VALID_TASK_TYPE.indexOf(type) && (type !== 'array' || task.length);
@@ -85,19 +83,19 @@ const hookFunction = function(grunt) {
     }
   }
 
-  return (globalHooker = hooker);
+  return (globalHooker = grunt.hooker = hooker);
 };
 
 Object.defineProperty(hookFunction, 'hook', {
   get: function() {
-    console.error('Error: Use hooker like "const hook = require(\'grunt-task-hooker\')(grunt)"'.red);
+    console.error('Error: Use hooker like "require(\'grunt-task-hooker\')(grunt)"'.red);
     exit(0);
   }
 });
 
 Object.defineProperty(hookFunction, 'unhook', {
   get: function() {
-    console.error('Error: Use hooker like "const hook = require(\'grunt-task-hooker\')(grunt)"'.red);
+    console.error('Error: Use hooker like "require(\'grunt-task-hooker\')(grunt)"'.red);
     exit(0);
   }
 });
