@@ -17,6 +17,8 @@ npm install grunt-task-hooker --save-dev
 ```js
 // Gruntfile.js
 module.exports = function (grunt) {
+
+  // Don't forget to pass "grunt" object into the function!!!
   const hooker = require('grunt-task-hooker')(grunt);
 
   grunt.initConfig({
