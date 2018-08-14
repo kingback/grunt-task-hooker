@@ -79,13 +79,19 @@ const hookFunction = function(grunt) {
 
   // override original function
   grunt.task.run = function(taskName) {
-    const hookTask = hookMap[taskName];
-    if (hookTask && taskName) {
-      hooker._run(hookTask.pre);
-      runTask.apply(this, arguments);
-      hooker._run(hookTask.post);
+    if (grunt.util.kindOf(taskName) === 'array') {
+      taskName.forEach(function(task) {
+        grunt.task.run(task);
+      });
     } else {
-      return runTask.apply(this, arguments);
+      const hookTask = hookMap[taskName];
+      if (hookTask && taskName) {
+        hooker._run(hookTask.pre);
+        runTask.apply(this, arguments);
+        hooker._run(hookTask.post);
+      } else {
+        return runTask.apply(this, arguments);
+      }
     }
   }
 
