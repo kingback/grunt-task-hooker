@@ -57,7 +57,7 @@ const hookFunction = function(grunt) {
 
       const whereType = grunt.util.kindOf(where);
 
-      if (!whereType) {
+      if (!where) {
         where = 'pre';
       } else if (whereType === 'boolean') {
         where = where ? 'post' : 'pre';
