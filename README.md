@@ -49,6 +49,17 @@ module.exports = function (grunt) {
     console.log('do something before all clean tasks');
   });
 
+  // hook replace task
+  grunt.hookTask('clean', 'ignore task clean', function() {
+    console.log('replace original clean task');
+  }, 'replace');
+
+  // grunt.hookTask(taskName, desc, task, where);
+  // where:
+  // undefined/false => pre
+  // true => post
+  // pre/post/replace
+
   // unhook all hooks
   grunt.unhookTask('clean');
 
